@@ -1,0 +1,51 @@
+
+https://www.romaniancoder.com/install-a-spring-boot-application-as-a-windows-service/
+https://www.youtube.com/watch?v=OOVE_g6F8mQ
+
+1)add configuration executable as true as following in pom.xml
+
+    <build>
+	    <finalName>Spring-Boot-REST</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+                    <executable>true</executable>
+                </configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+2)build the project
+
+3)Create a new folder and copy the generated jar file
+
+4)copy WinSW.NET4.exe and sample-minimal.xml file from https://github.com/kohsuke/winsw/releases and paste them in the same folder
+
+5)rename sample-minimal.xml to WinSW.NET4.xml and modify the xml as follows
+
+	<configuration>
+	  
+	  <!-- ID of the service. It should be unique accross the Windows system-->
+	  <id>Spring-Boot-REST</id>
+	  <!-- Display name of the service -->
+	  <name>Spring Boot REST</name>
+	  <!-- Service description -->
+	  <description>This service is a Spring Boot REST</description>
+	  
+	  <!-- Path to the executable, which should be started -->
+	  <executable>java</executable>
+	  <arguments>-jar %BASE%\Spring-Boot-REST.jar</arguments>
+
+	</configuration>
+	
+6)open a command prompt in Administrator mode and go to that newly created folder and execute the following command
+
+  WinSW.NET4.exe install
+
+7)go to Services then we can see our Spring-Boot-REST service. start the service and check logs in our folder. 
+  for every 10 seconds Current time is printed in the log file.
+  then stop the service
+
+  
